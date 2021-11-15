@@ -136,6 +136,9 @@ if __name__ == "__main__":
     nmap[end_node] = 0
 
     path = astar(nmap, end_node, start_node) # with a star algorithm generating path
+    if path == 0:
+        print("no possible path :(")
+        exit()
     path_len = len(path)
     for i in range(path_len):
         nmap[path[i]] = 80
