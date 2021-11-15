@@ -21,12 +21,26 @@ class Grassfire:
         obstacles (where the likelihood of any cell being an obstacle
         is given by obstacleProb) and randomized start/destination cells.
         '''
-        obstacleGrid = np.random.random_sample((rows, cols))
-        grid = Grassfire.UNVIS * np.ones((rows, cols), dtype=np.int)
-        grid[obstacleGrid <= obstacleProb] = self.OBST
-
+        while 1:
+            cho = input("\nDo you want to enter custom obstacles? Y/N::  ").upper()
+            if cho == "Y" or cho == "YES":
+                grid = Grassfire.UNVIS * np.ones((rows, cols), dtype=np.int)
+                obsNum = int(input("Enter number of obstacles:: "))
+                for i in range(obsNum):
+                    print("Obstacle", i+1)
+                    xi, yi = map(int, input('Please enter the obstacle position(x,y) separated by comma: ').split(','))
+                    grid[xi,yi] = self.OBST
+                break
+            elif cho == "N" or cho == "NO":
+                obstacleGrid = np.random.random_sample((rows, cols))
+                grid = Grassfire.UNVIS * np.ones((rows, cols), dtype=np.int)
+                grid[obstacleGrid <= obstacleProb] = self.OBST
+                break
+            else:
+                print("oops try again!")
         #prompts user to enter desired start and end position
         self.set_start_dest(grid)
+
         return grid
 
     def set_start_dest(self, grid):
@@ -44,11 +58,11 @@ class Grassfire:
                 grid[xAxis,yAxis] = Grassfire.START
                 xAxis, yAxis = tuple(map(int, input('Please enter the goal position(x,y) separated by comma: ').split(',')))
                 grid[xAxis,yAxis] = Grassfire.DEST
-                break;
+                break
             elif cho == "N" or cho == "NO":
                 grid[0,0] = Grassfire.START
                 grid[cols-1,rows-1] = Grassfire.DEST
-                break;
+                break
             else:
                 print("Oops! try again!")
 
