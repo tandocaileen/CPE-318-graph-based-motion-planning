@@ -129,8 +129,6 @@ if __name__ == "__main__":
 
     nmap[start_node] = 145
     nmap[end_node] = 185
-    print(a)
-    print(b)
     img = np.array(nmap)
 
 xdata = []
