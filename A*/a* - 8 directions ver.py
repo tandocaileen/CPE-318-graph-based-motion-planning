@@ -54,7 +54,7 @@ def astar(array, start, goal):
 
             if 0 <= neighbor[0] < array.shape[0]:
                 if 0 <= neighbor[1] < array.shape[1]:
-                    if array[neighbor[0]][neighbor[1]] == 1:  #  1 is obstacle
+                    if array[neighbor[0]][neighbor[1]] == 30:  #  1 is obstacle
                         continue
                 else:
                     # array bounded in y walls
@@ -81,49 +81,64 @@ def astar(array, start, goal):
     return False
 
 if __name__ == "__main__":
-    while(1):
+    while 1:
         cho = input("Do you want to enter custom grid size? Y/N::  ").upper()
         if cho=="Y" or cho=="YES":
             mapsize = tuple(map(int, input('Please enter the grid size(x,y) separated by comma: ').split(',')))
-            break;
+            break
         elif cho=="N" or cho=="NO":
             mapsize = (10,10)
-            break;
+            break
         else:
             print("Oops! try again!")
 
     nmap = np.zeros(mapsize)
     map_weight = nmap.shape[0]
     map_height = nmap.shape[1]
+    obs = []
 
-    while(1):
+    while 1:
         cho = input("\nDo you want to enter starting and goal position? Y/N::  ").upper()
         if cho == "Y" or cho == "YES":
             starter = tuple(map(int, input('Please enter the starting position(x,y) separated by comma: ').split(',')))
             goalie = tuple(map(int, input('Please enter the goal position(x,y) separated by comma: ').split(',')))
-            break;
+            break
         elif cho == "N" or cho == "NO":
             starter = (0, 0)
             goalie = (nmap.shape[0] - 1, nmap.shape[0] - 1)
-            break;
+            break
         else:
             print("Oops! try again!")
 
     start_node = (starter[0],starter[1])
     end_node = (goalie[0],goalie[1])
 
-    #  Random generate grid
-    for i in range(int(0.30*map_weight*map_height)):
-        xi = random.randint(0, map_weight-1)
-        yi = random.randint(0, map_height-1)
-        nmap[xi][yi] = 30
+    while 1:
+        cho = input("\nDo you want to enter custom obstacles? Y/N::  ").upper()
+        if cho == "Y" or cho == "YES":
+            obsNum = int(input("Enter number of obstacles:: "))
+            for i in range(obsNum):
+                print("Obstacle", i+1)
+                xi, yi = map(int, input('Please enter the obstacle position(x,y) separated by comma: ').split(','))
+                nmap[yi][xi] = 30
+            break
+        elif cho == "N" or cho == "NO":
+            #  Random generate grid
+            for i in range(int(0.30 * map_weight * map_height)):
+                xi = random.randint(0, map_weight - 1)
+                yi = random.randint(0, map_height - 1)
+                nmap[xi][yi] = 30
+            break
+        else:
+            print("Oops! try again!")
+
     nmap[start_node] = 0
     nmap[end_node] = 0
 
     path = astar(nmap, end_node, start_node) # with a star algorithm generating path
     path_len = len(path)
     for i in range(path_len):
-        nmap[path[i]]=80
+        nmap[path[i]] = 80
         a.append(path[i][0])
         b.append(path[i][1])
 
