@@ -105,7 +105,7 @@ if __name__ == "__main__":
             break
         elif cho == "N" or cho == "NO":
             starter = (0, 0)
-            goalie = (nmap.shape[0] - 1, nmap.shape[0] - 1)
+            goalie = (nmap.shape[0] - 1, nmap.shape[1] - 1)
             break
         else:
             print("Oops! try again!")
