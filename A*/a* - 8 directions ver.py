@@ -99,9 +99,15 @@ if __name__ == "__main__":
 
     while 1:
         cho = input("\nDo you want to enter starting and goal position? Y/N::  ").upper()
+        yay = True
         if cho == "Y" or cho == "YES":
-            starter = tuple(map(int, input('Please enter the starting position(x,y) separated by comma: ').split(',')))
-            goalie = tuple(map(int, input('Please enter the goal position(x,y) separated by comma: ').split(',')))
+            while yay:
+                starter = tuple(map(int, input('Please enter the starting position(x,y) separated by comma: ').split(',')))
+                goalie = tuple(map(int, input('Please enter the goal position(x,y) separated by comma: ').split(',')))
+                if starter[0] >= mapsize[0] or starter[1] >= mapsize[1] or goalie[0] >= mapsize[0] or goalie[1] >= mapsize[1]:
+                    print("starting or goal position is out of bounds!")
+                else:
+                    break
             break
         elif cho == "N" or cho == "NO":
             starter = (0, 0)
@@ -117,10 +123,15 @@ if __name__ == "__main__":
         cho = input("\nDo you want to enter custom obstacles? Y/N::  ").upper()
         if cho == "Y" or cho == "YES":
             obsNum = int(input("Enter number of obstacles:: "))
-            for i in range(obsNum):
+            i = 0
+            while i<obsNum and i>=0:
                 print("Obstacle", i+1)
                 xi, yi = map(int, input('Please enter the obstacle position(x,y) separated by comma: ').split(','))
-                nmap[yi][xi] = 30
+                if xi >= mapsize[0] or yi >= mapsize[1]:
+                    print("obstacle position is out of bounds!")
+                else:
+                    nmap[yi][xi] = 30
+                    i=i+1
             break
         elif cho == "N" or cho == "NO":
             #  Random generate grid
@@ -140,7 +151,6 @@ if __name__ == "__main__":
         print("no possible path :(")
         exit()
     path_len = len(path)
-
 
     for i in range(path_len):
         nmap[path[i]] = 80
