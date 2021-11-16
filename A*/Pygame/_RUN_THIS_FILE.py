@@ -1,5 +1,5 @@
 import pygame
-from info import GRIDSIZE, SCREEN_WIDTH, SCREEN_HEIGHT, LEFT_CLICK, RIGHT_CLICK, EYYY
+from info import GRIDSIZE, SCREEN_WIDTH, SCREEN_HEIGHT, LEFT_CLICK, RIGHT_CLICK, EYYY, gr
 from settings import Settings
 from draw import drawGrid, updateGrid, drawPath
 from pathfinding import findPath
@@ -15,6 +15,7 @@ messagebox.showinfo('INSTRUCTIONS','- Left click the starting position.\n'
 								   '- Press space key to clear the grid\n'
 								   '- Press t key to switch between euclidian(8 directions) or taxi distance(4 directions)\n'
 								   '- Press arrows up or down to speed up or slow down the animation.\n'
+								   '- Press r key to use fixed start and goal positions\n'
 								   'NOW PRESS OK AND MANUALLY OPEN THE PYGAME WINDOW :D')
 def handleKeys(settings):
 	for event in pygame.event.get():
@@ -70,6 +71,11 @@ def handleKeys(settings):
 				if point != settings.start and  point != settings.end:
 					settings.maze[point[0]][point[1]].obstacle = True
 					settings.update = True
+			elif event.key == pygame.K_r:
+				settings.start = (0,0)
+				settings.end = (gr-1,gr-1)
+				settings.update = True
+
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			pressed = pygame.mouse.get_pressed()
 			if pressed == LEFT_CLICK:

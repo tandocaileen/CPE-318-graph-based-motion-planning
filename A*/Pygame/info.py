@@ -1,7 +1,18 @@
 print("******************************************************************\n"
       "                            INPUT HERE\n"
       "******************************************************************")
-gr = int(input("Enter grid size (square)::  "))
+while True:
+    cho = input("Do you want to customize grid size? Y/N ::  ").upper()
+    if cho == "Y" or cho=="YES":
+        gr = int(input("Enter grid size (square)::  "))
+        break;
+    elif cho == "N" or cho== "NO":
+        gr = 10
+        break
+    else:
+        print("oops! try again!")
+
+
 print('******************************************************************\n'
       '                           INSTRUCTIONS\n'
       '******************************************************************\n'
@@ -11,8 +22,10 @@ print('******************************************************************\n'
 	  '- Press enter key to find path\n'
 	  '- Press any of 1-6 (1 being the least while 6 being the most dense) key to randomize obstacles\n'
 	  '- Press space key to clear the grid\n'
-      '- Press t key to switch between euclidian(8 directions) or taxi distance(4 directions)\n'
+      '- Press t key to switch between euclidian(8 directions) or taxicab geometry (4 directions)\n'
+	  '- Press t key to switch between euclidian(8 directions) or taxi distance(4 directions)\n'
 	  '- Press arrows up or down to speed up or slow down the animation.\n'
+	  '- Press r key to use fixed start and goal positions\n'
 	  'NOW PRESS OK AND MANUALLY OPEN THE PYGAME WINDOW :D')
 
 
