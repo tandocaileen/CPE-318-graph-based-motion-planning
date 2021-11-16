@@ -1,28 +1,6 @@
 import pygame
 from queue import PriorityQueue
-from tkinter import *
-from tkinter import messagebox
-
-# Creating the pygame window
-width = 600
-window = pygame.display.set_mode((width, width))
-pygame.display.set_caption("A* PathFinding Algorithm")
-
-# Colors (RGB)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 255, 0)
-yellow = (255, 255, 0)
-white = (255, 255, 255)
-black = (0, 0, 0)
-purple = (128, 0, 128)
-blue = (60, 33, 235)
-grey = (128, 128, 128)
-turquoise = (64, 224, 208)
-
-
 class Node:
-
     def __init__(self, row, col, width, totalRows):
         self.row = row
         self.col = col
@@ -33,66 +11,12 @@ class Node:
         self.width = width
         self.totalRows = totalRows
 
-    # Returns the position of the square
-    def getPosition(self):
-        return self.row, self.col
-
-    # Determines if the node is closed (red means closed)
-    def nodeClosed(self):
-        return self.color == red
-
-    # Determines if a node is in the open set
-    def nodeOpen(self):
-        return self.color == green
-
-    # If the node is black it is a barrier
-    def nodeBarrier(self):
-        return self.color == black
-
-    # Start node is blue
-    def nodeStart(self):
-        return self.color == blue
-
-    # End node is purple
-    def nodeEnd(self):
-        return self.color == turquoise
-
-    # Reset colors
-    def nodeReset(self):
-        self.color = white
-
-    # Making the start node
-    def makeNodeStart(self):
-        self.color = blue
-
-    # Making the node closed
-    def makeNodeClosed(self):
-        self.color = red
-
-    # Making the node open
-    def makeNodeOpen(self):
-        self.color = green
-
-    # Making a barrier
-    def makeBarrier(self):
-        self.color = black
-
-    # Making the end
-    def makeEnd(self):
-        self.color = turquoise
-
-    # Making the path
-    def makePath(self):
-        self.color = purple
-
-    # Call this method to draw the cube
     def draw(self, win):
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.width))
 
     # Checks if the nodes are barriers and if they are not we will add it to the neighbors list
     def updateNodeNeighbors(self, grid):
         self.neighbors = []
-
         # Checking if we can move down a square
         if self.row < self.totalRows - 1 and not grid[self.row + 1][self.col].nodeBarrier():
             self.neighbors.append(grid[self.row + 1][self.col])  # Append the next row
@@ -113,9 +37,33 @@ class Node:
     def __lt__(self, other):
         return False
 
+    def nodeClosed(self):
+        return self.color == red
+    def getPosition(self):
+        return self.row, self.col
+    def nodeBarrier(self):
+        return self.color == black
+    def nodeOpen(self):
+        return self.color == green
+    def nodeEnd(self):
+        return self.color == pink
+    def nodeStart(self):
+        return self.color == blue
+    def nodeReset(self):
+        self.color = white
+    def makeNodeClosed(self):
+        self.color = red
+    def makeNodeStart(self):
+        self.color = blue
+    def makeNodeOpen(self):
+        self.color = green
+    def makeBarrier(self):
+        self.color = black
+    def makeEnd(self):
+        self.color = pink
+    def makePath(self):
+        self.color = purple
 
-# Creating the heuristic function
-# Finding the distance from point 1 to point 2 using Manhattan distance
 def hFunction(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
@@ -128,7 +76,6 @@ def reconstructPath(cameFrom, current, draw):
         current = cameFrom[current]
         current.makePath()
         draw()
-
 
 # Algorithm function
 def algorithm(draw, grid, start, end):
@@ -179,9 +126,7 @@ def algorithm(draw, grid, start, end):
 
     return False  # Returing false if we could not find a path
 
-
-# Making the grid
-def drawGrid(rows, width):
+def dGrid(rows, width):
     grid = []
     gapBetweenRows = width // rows
     for row in range(rows):
@@ -191,9 +136,7 @@ def drawGrid(rows, width):
             grid[row].append(node)
     return grid
 
-
-# Making the grid lines
-def drawGridLines(win, rows, width):
+def gridLines(win, rows, width):
     gap = width // rows
     # Making the horizontal gridlines
     for row in range(rows):
@@ -210,7 +153,7 @@ def draw(win, grid, rows, width):
         for node in row:
             node.draw(win)
     # Drawing gridlines on top of the filled squres
-    drawGridLines(win, rows, width)
+    gridLines(win, rows, width)
     pygame.display.update()  # Updating the display
 
 
@@ -231,10 +174,10 @@ def main(win, width):
     rows = int(input("Enter Grid size (square):: "))
     print("***************INSTRUCTIONS***************\n"
           "1. Click the starting position. (blue)\n"
-          "2. Click the goal position. (turquoise)\n"
+          "2. Click the goal position. (pink)\n"
           "3. CLick anywhere for the obstacles. (black)\n"
           "4. Press enter on your keyboard to solve.(violet)")
-    grid = drawGrid(rows, width)  # Generating the grid (2D list of spots)
+    grid = dGrid(rows, width)  # Generating the grid (2D list of spots)
     start = None
     end = None
     run = True
@@ -289,7 +232,18 @@ def main(win, width):
                 if event.key == pygame.K_BACKSPACE:
                     start = None
                     end = None
-                    grid = drawGrid(rows, width)
+                    grid = dGrid(rows, width)
     pygame.quit()  # Quitting pygame
 
+width = 600
+window = pygame.display.set_mode((width, width))
+red = (224,24,3)
+green = (3,224,162)
+white = (255, 255, 255)
+black = (0, 0, 0)
+purple = (122,3,224)
+blue = (100,149,237)
+grey = (128, 128, 128)
+pink = (254,130,172)
+pygame.display.set_caption("A* PathFinding Algorithm")
 main(window, width)  # Calling the main function to run the program
