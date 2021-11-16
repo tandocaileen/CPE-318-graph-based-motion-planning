@@ -95,5 +95,5 @@ ani = animation.FuncAnimation(fig, update_anim,
     repeat=False, interval=150)
 
 plt.ion()
-plt.title("Grassfire Pathfinding")
+plt.title("ignore Pathfinding")
 plt.show(block=True)
