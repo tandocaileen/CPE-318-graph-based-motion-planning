@@ -13,7 +13,7 @@ messagebox.showinfo('INSTRUCTIONS','- Left click the starting position.\n'
 								   '- Press enter key to find path\n'
 								   '- Press any of 1-6 (1 being the least while 6 being the most dense) key to randomize obstacles\n'
 								   '- Press space key to clear the grid\n'
-								   '- Press t key to switch between euclidian(8 directions) or taxi distance(4 directions)\n'
+								   '- Press t key to switch between euclidian(8 directions) or taxicab gemoetry(4 directions)\n'
 								   '- Press arrows up or down to speed up or slow down the animation.\n'
 								   '- Press r key to use fixed start and goal positions\n'
 								   'NOW PRESS OK AND MANUALLY OPEN THE PYGAME WINDOW :D')
